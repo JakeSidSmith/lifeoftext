@@ -61,7 +61,7 @@ const play = (
   };
 
   const handleKeyPress = (event: KeyboardEvent) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && input.value) {
       matchAnswers(input.value);
     }
   };
