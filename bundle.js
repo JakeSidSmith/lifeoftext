@@ -14788,6 +14788,8 @@ var global_matches_1 = require("./global-matches");
 var utils_1 = require("./utils");
 var play = function (messages, input, newGame) {
     var history = [newGame];
+    var inputHistory = [];
+    var inputHistoryIndex = inputHistory.length + 1;
     var advance = function (answer) {
         var next = answer.next();
         history.push(next);
@@ -14797,6 +14799,8 @@ var play = function (messages, input, newGame) {
         utils_1.displayLines(messages, next.prompt, next.color);
     };
     var matchAnswers = function (userInput) {
+        inputHistory.push(userInput);
+        inputHistoryIndex = inputHistory.length;
         utils_1.displayLines(messages, userInput, 'user-input');
         input.value = '';
         var lastPrompt = history[history.length - 1];
@@ -14826,8 +14830,25 @@ var play = function (messages, input, newGame) {
         utils_1.displayLines(messages, lastPrompt.prompt, lastPrompt.color);
     };
     var handleKeyPress = function (event) {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && input.value) {
             matchAnswers(input.value);
+        }
+        if (event.key === 'ArrowUp') {
+            event.preventDefault();
+            inputHistoryIndex = Math.max(inputHistoryIndex - 1, 0);
+            if (inputHistory[inputHistoryIndex]) {
+                input.value = inputHistory[inputHistoryIndex];
+            }
+        }
+        if (event.key === 'ArrowDown') {
+            event.preventDefault();
+            inputHistoryIndex = Math.min(inputHistoryIndex + 1, inputHistory.length);
+            if (inputHistory[inputHistoryIndex]) {
+                input.value = inputHistory[inputHistoryIndex];
+            }
+            else {
+                input.value = '';
+            }
         }
     };
     var init = function () {
