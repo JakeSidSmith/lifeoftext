@@ -36,22 +36,22 @@ const moveRight: Prompt = {
 
 const initialSwimAnswers: ReadonlyArray<Answer> = [
   {
-    match: 'i (swim|move) (forward|forwards)',
+    match: 'i (swim|move|go) (forward|forwards)',
     next: () => moveForwards,
   },
   {
-    match: 'i (swim|move) (back|backwards)',
+    match: 'i (swim|move|go) (back|backwards)',
     prePrompt:
       'You move backwards and slip through an opening.\nYou fall a great height.\nYou land, and after some time you feel your body weakening as you gradually dehydrate.',
     color: 'red',
     next: () => youDie,
   },
   {
-    match: 'i (swim|move) left',
+    match: 'i (swim|move|go) left',
     next: () => moveLeft,
   },
   {
-    match: 'i (swim|move) right',
+    match: 'i (swim|move|go) right',
     next: () => moveRight,
   },
   {
