@@ -45,33 +45,33 @@ jobs:
       - store_artifacts:
           path: coverage
           prefix: coverage
-      # - persist_to_workspace:
-      #     root: .
-      #     paths:
-      #       - docs
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
 
-  # deploy:
-  #   docker:
-  #     - image: circleci/node:12.6
-  #   steps:
-  #     - checkout
-  #     - attach_workspace:
-  #         at: .
-  #     - run:
-  #         name: Deploy
-  #         command: ./scripts/deploy
+  deploy:
+    docker:
+      - image: circleci/node:12.6
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Deploy
+          command: ./scripts/deploy
 
 workflows:
   version: 2
   test-build-deploy:
     jobs:
       - test
-      # - deploy:
-      #     requires:
-      #       - test
-      #     filters:
-      #       branches:
-      #         only: master
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
 
 general:
   branches:
