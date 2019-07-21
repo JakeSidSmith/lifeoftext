@@ -4,7 +4,7 @@ let youDie: Prompt;
 
 const newGameAnswers: ReadonlyArray<Answer> = [
   {
-    match: 'I (do)? #Negative (want|like)? to? play',
+    match: 'I (do)? #Negative (want|like)? to? (play|start|begin)',
     prePrompt: 'You do nothing...',
     next: () => youDie,
   },
@@ -19,7 +19,7 @@ const newGameAnswers: ReadonlyArray<Answer> = [
     next: () => youDie,
   },
   {
-    match: 'I would? (like|want|go)? to? play',
+    match: 'I would? (like|want|go)? to? (play|start|begin)',
     next: () => ({
       prompt: 'You begin to play the game! THE END...',
       answers: [],
