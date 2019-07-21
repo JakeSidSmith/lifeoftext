@@ -6,6 +6,29 @@
   ],
   "rules": {
     "variable-name": [true, "allow-leading-underscore", "ban-keywords"],
+    "ordered-imports": [
+      true,
+      {
+        "grouped-imports": true,
+        "groups": [
+          {
+            "name": "node modules",
+            "match": "^[@a-zA-Z]",
+            "order": 0
+          },
+          {
+            "name": "local modules",
+            "match": "^[^@a-zA-Z]",
+            "order": 1
+          },
+          {
+            "name": "unknown",
+            "match": null,
+            "order": 2
+          }
+        ]
+      }
+    ],
     "strict-type-predicates": true,
 
     "object-literal-sort-keys": false,

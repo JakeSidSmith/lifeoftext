@@ -1,10 +1,8 @@
-export const message = 'Hello';
+import { play } from './game';
+import { introduction } from './introduction';
+import { newGame } from './new-game';
+import { setup } from './setup';
 
-const app = document.getElementById('app') as HTMLDivElement;
-
-const messageElement = document.createElement('p');
-messageElement.textContent = message;
-
-app.appendChild(messageElement);
-
-export default message;
+const { messages, input } = setup();
+introduction(messages);
+play(messages, input, newGame);
