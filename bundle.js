@@ -14852,7 +14852,7 @@ var play = function (messages, input, newGame) {
         }
     };
     var init = function () {
-        input.addEventListener('keypress', handleKeyPress);
+        input.addEventListener('keydown', handleKeyPress);
         utils_1.displayLines(messages, newGame.prompt, newGame.color);
     };
     init();
