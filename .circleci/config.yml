@@ -65,15 +65,14 @@ workflows:
   version: 2
   test-build-deploy:
     jobs:
-      - test
+      - test:
+          filters:
+            branches:
+              ignore:
+                - gh-pages
       - deploy:
           requires:
             - test
           filters:
             branches:
               only: master
-
-general:
-  branches:
-    ignore:
-      - gh-pages
