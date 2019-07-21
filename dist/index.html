@@ -49,8 +49,20 @@
 
     .messages {
       width: 100%;
-      min-height: 400px;
+      min-height: 200px;
       text-align: left;
+    }
+
+    @media all and (min-width: 480px) {
+      .messages {
+        min-height: 300px;
+      }
+    }
+
+    @media all and (min-width: 1024px) {
+      .messages {
+        min-height: 400px;
+      }
     }
 
     .input {
