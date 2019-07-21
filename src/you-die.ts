@@ -2,7 +2,7 @@ import { Answer, Prompt } from './types';
 
 const newGameAnswers: ReadonlyArray<Answer> = [
   {
-    match: 'i (do)? #Negative (want|like)? to? (play|start|begin)',
+    match: 'i (do|would)? #Negative (want|like)? to? (play|start|begin)',
     prePrompt: 'You do nothing...',
     next: () => youDie,
   },
