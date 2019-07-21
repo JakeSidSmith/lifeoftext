@@ -35,7 +35,10 @@ const play = (
       }
     }
 
-    displayLines(messages, "I'm sorry, I don't understand.");
+    displayLines(
+      messages,
+      "I'm sorry, I don't understand.\nLet's try that again..."
+    );
     displayLines(messages, lastPrompt.prompt, lastPrompt.color);
   };
 
