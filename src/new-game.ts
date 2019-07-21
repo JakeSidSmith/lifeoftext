@@ -32,7 +32,7 @@ const newGameAnswers: ReadonlyArray<Answer> = [
     next: () => newGame,
   },
   {
-    match: '(yeah|yes|uhuh|no|nope|nah)',
+    match: '(yeah|yes|uhuh|no|nope|nah|nothing)',
     next: () => ({
       prompt: 'Would _YOU_ like to play?',
       answers: newGameAnswers,
