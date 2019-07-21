@@ -91,7 +91,7 @@ const play = (
   };
 
   const init = () => {
-    input.addEventListener('keypress', handleKeyPress);
+    input.addEventListener('keydown', handleKeyPress);
     displayLines(messages, newGame.prompt, newGame.color);
   };
 
