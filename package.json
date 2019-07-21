@@ -4,8 +4,8 @@
   "description": "Text based adventure game",
   "main": "dist/bundle.js",
   "scripts": {
-    "dist": "rm -rf dist && mkdir -p dist && cp index.html dist/index.html && browserify src/index.ts -o dist/bundle.js -p [tsify -p tsconfig.dist.json]",
-    "start": "cp index.html dist/index.html && budo src/index.ts:dist/bundle.js --dir dist --live -- -p [tsify -p tsconfig.dev.json]",
+    "dist": "rm -rf dist/*.js && browserify src/index.ts -o dist/bundle.js -p [tsify -p tsconfig.dist.json]",
+    "start": "budo src/index.ts:bundle.js --dir dist --live -- -p [tsify -p tsconfig.dev.json]",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "prettier": "prettier --write '**/*.{ts,tsx,js,jsx}'",
     "prettier-check": "prettier --check '**/*.{ts,tsx,js,jsx}'",
