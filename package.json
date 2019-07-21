@@ -1,0 +1,45 @@
+{
+  "name": "lifeoftext",
+  "version": "0.0.0",
+  "description": "Text based adventure game",
+  "main": "dist/bundle.js",
+  "scripts": {
+    "dist": "rm -rf dist && mkdir -p dist && cp index.html dist/index.html && browserify src/index.ts -o dist/bundle.js -p [tsify -p tsconfig.dist.json]",
+    "start": "cp index.html dist/index.html && budo src/index.ts:dist/bundle.js --dir dist --live -- -p [tsify -p tsconfig.dev.json]",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "prettier": "prettier --write '**/*.{ts,tsx,js,jsx}'",
+    "prettier-check": "prettier --check '**/*.{ts,tsx,js,jsx}'",
+    "lint": "npm run prettier-check && tslint --project tsconfig.json",
+    "tests": "jest",
+    "test": "npm run lint && npm run typecheck && npm run tests -- --runInBand --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jakesidsmith/lifeoftext.git"
+  },
+  "keywords": [
+    "text",
+    "adventure",
+    "game",
+    "life"
+  ],
+  "author": "Jake 'Sid' Smith",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jakesidsmith/lifeoftext/issues"
+  },
+  "homepage": "https://github.com/jakesidsmith/lifeoftext#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^24.0.13",
+    "budo": "^11.6.2",
+    "jest": "^24.8.0",
+    "prettier": "^1.17.1",
+    "ts-jest": "^24.0.2",
+    "tsify": "^4.0.1",
+    "tslint": "^5.16.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "typescript": "^3.5.3"
+  }
+}
