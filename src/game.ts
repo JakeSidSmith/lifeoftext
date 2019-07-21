@@ -1,5 +1,6 @@
 import * as npl from 'compromise';
 
+import { GLOBAL_MATCHES } from './global-matches';
 import { Answer, Prompt } from './types';
 import { displayLines } from './utils';
 
@@ -31,11 +32,31 @@ const play = (
       const match = npl(userInput);
 
       if (match.has(answer.match)) {
-        return advance(answer);
+        advance(answer);
+        return;
       }
     }
 
-    displayLines(messages, "I'm sorry, I don't understand.");
+    for (const globalMatch of GLOBAL_MATCHES) {
+      const match = npl(userInput);
+
+      if (match.has(globalMatch.match)) {
+        const response = globalMatch.respond(match.match(globalMatch.match));
+        if (typeof response === 'string') {
+          displayLines(messages, response);
+          return;
+        }
+
+        history.push(response);
+        displayLines(messages, response.prompt, response.color);
+        return;
+      }
+    }
+
+    displayLines(
+      messages,
+      "I'm sorry, I don't understand.\nLet's try that again..."
+    );
     displayLines(messages, lastPrompt.prompt, lastPrompt.color);
   };
 
