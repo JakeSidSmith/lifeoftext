@@ -1,3 +1,4 @@
+import { level1 } from './levels/1';
 import { Answer, Prompt } from './types';
 
 const newGameAnswers: ReadonlyArray<Answer> = [
@@ -18,11 +19,7 @@ const newGameAnswers: ReadonlyArray<Answer> = [
   },
   {
     match: 'i would? (like|want|go)? to? (play|start|begin)',
-    next: () => ({
-      prompt: 'You begin to play the game! THE END...',
-      answers: [],
-      color: 'yellow',
-    }),
+    next: () => level1,
   },
   {
     match: 'i #Verb',
