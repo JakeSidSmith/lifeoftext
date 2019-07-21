@@ -1,4 +1,7 @@
-declare function compromise(text: string, lexicon?: { [word: string]: string }): compromise.Text;
+declare function compromise(
+  text: string,
+  lexicon?: { [word: string]: string }
+): compromise.Text;
 declare namespace compromise {
   const version: string;
   function verbose(str: any): void;
@@ -34,8 +37,8 @@ declare namespace compromise {
     readonly isA: 'Text';
     /** the whitespace before and after this match */
     readonly whitespace: {
-      before(str: string): Text,
-      after(str: string): Text
+      before(str: string): Text;
+      after(str: string): Text;
     };
 
     acronyms(...args: any[]): any;
