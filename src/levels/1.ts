@@ -12,7 +12,7 @@ const noCanDoAnswers: ReadonlyArray<Answer> = [
   },
   {
     match: 'i (feel|touch|reach)',
-    next: () => ({ ...level1, prompt: 'You have no arms' }),
+    next: () => ({ ...level1, prompt: 'You have no arms.' }),
   },
 ];
 
