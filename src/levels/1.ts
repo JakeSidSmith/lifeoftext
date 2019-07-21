@@ -72,7 +72,7 @@ const initialSwimAnswers: ReadonlyArray<Answer> = [
 
 const level1: Prompt = {
   prompt:
-    'You are in a cramped space surrounded by other beings.\nSuddenly you are thrust forward with extreme force.\nYou are throw into a much larger space, still surrounded by other beings.',
+    'You are in a cramped space surrounded by other beings.\nSuddenly you are thrust forward with extreme force.\nYou are thrown into a much larger space, still surrounded by other beings.',
   answers: [...noCanDoAnswers, ...initialSwimAnswers],
 };
 
