@@ -1,6 +1,20 @@
 import { Answer, Prompt } from '../types';
 import { youDie } from '../you-die';
 
+const c1: ReadonlyArray<any> = [
+  {
+    direction: 'back',
+    prePrompt:
+      'You slip through an opening and fall a great height.\nYou land, and after some time you feel your body weakening as you gradually dehydrate.',
+    next: () => youDie,
+  },
+];
+const c2 = c1;
+const c3 = c1;
+
+const start = [1, 2];
+const area = [[a1, b1, c1], [a2, b2, c2], [a3, b3, c3]];
+
 const noCanDoAnswers: ReadonlyArray<Answer> = [
   {
     match: 'i (look|see)',
