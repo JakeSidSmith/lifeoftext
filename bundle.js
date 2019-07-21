@@ -14784,6 +14784,7 @@ exports.NBSP = '\u00A0';
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var npl = require("compromise");
+var global_matches_1 = require("./global-matches");
 var utils_1 = require("./utils");
 var play = function (messages, input, newGame) {
     var history = [newGame];
@@ -14803,10 +14804,25 @@ var play = function (messages, input, newGame) {
             var answer = _a[_i];
             var match = npl(userInput);
             if (match.has(answer.match)) {
-                return advance(answer);
+                advance(answer);
+                return;
             }
         }
-        utils_1.displayLines(messages, "I'm sorry, I don't understand.");
+        for (var _b = 0, GLOBAL_MATCHES_1 = global_matches_1.GLOBAL_MATCHES; _b < GLOBAL_MATCHES_1.length; _b++) {
+            var globalMatch = GLOBAL_MATCHES_1[_b];
+            var match = npl(userInput);
+            if (match.has(globalMatch.match)) {
+                var response = globalMatch.respond(match.match(globalMatch.match));
+                if (typeof response === 'string') {
+                    utils_1.displayLines(messages, response);
+                    return;
+                }
+                history.push(response);
+                utils_1.displayLines(messages, response.prompt, response.color);
+                return;
+            }
+        }
+        utils_1.displayLines(messages, "I'm sorry, I don't understand.\nLet's try that again...");
         utils_1.displayLines(messages, lastPrompt.prompt, lastPrompt.color);
     };
     var handleKeyPress = function (event) {
@@ -14822,7 +14838,38 @@ var play = function (messages, input, newGame) {
 };
 exports.play = play;
 
-},{"./utils":8,"compromise":1}],4:[function(require,module,exports){
+},{"./global-matches":4,"./utils":9,"compromise":1}],4:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var you_die_1 = require("./you-die");
+var GLOBAL_MATCHES = [
+    {
+        match: 'i kill myself',
+        respond: function () { return you_die_1.youDie; },
+    },
+    {
+        match: 'i die',
+        respond: function () { return you_die_1.youDie; },
+    },
+    {
+        match: 'i reload the (page|tab|window|browser|game)',
+        respond: function () {
+            window.location.reload();
+            return 'You reload the page.';
+        },
+    },
+    {
+        match: '(this|your) game [*]',
+        respond: function (match) {
+            return "You know what really " + match
+                .normalize({ whitespace: true })
+                .out('normal') + "?\nYou!";
+        },
+    },
+];
+exports.GLOBAL_MATCHES = GLOBAL_MATCHES;
+
+},{"./you-die":10}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var game_1 = require("./game");
@@ -14833,7 +14880,7 @@ var _a = setup_1.setup(), messages = _a.messages, input = _a.input;
 introduction_1.introduction(messages);
 game_1.play(messages, input, new_game_1.newGame);
 
-},{"./game":3,"./introduction":5,"./new-game":6,"./setup":7}],5:[function(require,module,exports){
+},{"./game":3,"./introduction":6,"./new-game":7,"./setup":8}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var utils_1 = require("./utils");
@@ -14843,60 +14890,18 @@ var introduction = function (messages) {
 };
 exports.introduction = introduction;
 
-},{"./utils":8}],6:[function(require,module,exports){
+},{"./utils":9}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var youDie;
-exports.youDie = youDie;
-var newGameAnswers = [
-    {
-        match: 'I (do)? #Negative (want|like)? to? (play|start|begin)',
-        prePrompt: 'You do nothing...',
-        next: function () { return youDie; },
-    },
-    {
-        match: 'I play #Negative',
-        prePrompt: 'You do nothing...',
-        next: function () { return youDie; },
-    },
-    {
-        match: 'I do nothing',
-        prePrompt: 'You do nothing...',
-        next: function () { return youDie; },
-    },
-    {
-        match: 'I would? (like|want|go)? to? (play|start|begin)',
-        next: function () { return ({
-            prompt: 'You begin to play the game! THE END...',
-            answers: [],
-            color: 'yellow',
-        }); },
-    },
-    {
-        match: 'I #Verb',
-        prePrompt: "Nice try, but we haven't started playing yet.",
-        next: function () { return newGame; },
-    },
-    {
-        match: '(yeah|yes|uhuh|no|nope|nah|nothing)',
-        next: function () { return ({
-            prompt: 'Would _YOU_ like to play?',
-            answers: newGameAnswers,
-        }); },
-    },
-];
-exports.youDie = youDie = {
-    prompt: 'You die.\nWould you like to play again?',
-    answers: newGameAnswers,
-    color: 'red',
-};
+var you_die_1 = require("./you-die");
+exports.youDie = you_die_1.youDie;
 var newGame = {
     prompt: 'Would you like to play?',
-    answers: newGameAnswers,
+    answers: you_die_1.newGameAnswers,
 };
 exports.newGame = newGame;
 
-},{}],7:[function(require,module,exports){
+},{"./you-die":10}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var setup = function () {
@@ -14916,7 +14921,7 @@ var setup = function () {
 };
 exports.setup = setup;
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var constants_1 = require("./constants");
@@ -14935,4 +14940,55 @@ var displayLines = function (messages, text, className) {
 };
 exports.displayLines = displayLines;
 
-},{"./constants":2}]},{},[4]);
+},{"./constants":2}],10:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var newGameAnswers = [
+    {
+        match: 'i (do)? #Negative (want|like)? to? (play|start|begin)',
+        prePrompt: 'You do nothing...',
+        next: function () { return youDie; },
+    },
+    {
+        match: 'i play #Negative',
+        prePrompt: 'You do nothing...',
+        next: function () { return youDie; },
+    },
+    {
+        match: 'i do nothing',
+        prePrompt: 'You do nothing...',
+        next: function () { return youDie; },
+    },
+    {
+        match: 'i would? (like|want|go)? to? (play|start|begin)',
+        next: function () { return ({
+            prompt: 'You begin to play the game! THE END...',
+            answers: [],
+            color: 'yellow',
+        }); },
+    },
+    {
+        match: 'i #Verb',
+        prePrompt: "Nice try, but we haven't started playing yet.",
+        next: function () { return ({
+            prompt: 'Would you like to play?',
+            answers: newGameAnswers,
+        }); },
+    },
+    {
+        match: '(yeah|yes|uhuh|no|nope|nah|nothing)',
+        next: function () { return ({
+            prompt: 'Would _YOU_ like to play?',
+            answers: newGameAnswers,
+        }); },
+    },
+];
+exports.newGameAnswers = newGameAnswers;
+var youDie = {
+    prompt: 'You die.\nWould you like to play again?',
+    answers: newGameAnswers,
+    color: 'red',
+};
+exports.youDie = youDie;
+
+},{}]},{},[5]);
