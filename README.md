@@ -2,6 +2,8 @@
 
 Text based adventure game
 
+[![CircleCI](https://circleci.com/gh/JakeSidSmith/lifeoftext.svg?style=svg)](https://circleci.com/gh/JakeSidSmith/lifeoftext)
+
 ## Contributing
 
 Clone the repository.
