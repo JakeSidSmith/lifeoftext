@@ -10,6 +10,8 @@ const play = (
   newGame: Prompt
 ) => {
   const history: Prompt[] = [newGame];
+  const inputHistory: string[] = [];
+  let inputHistoryIndex = inputHistory.length + 1;
 
   const advance = (answer: Answer) => {
     const next = answer.next();
@@ -23,6 +25,8 @@ const play = (
   };
 
   const matchAnswers = (userInput: string) => {
+    inputHistory.push(userInput);
+    inputHistoryIndex = inputHistory.length;
     displayLines(messages, userInput, 'user-input');
     input.value = '';
 
@@ -63,6 +67,26 @@ const play = (
   const handleKeyPress = (event: KeyboardEvent) => {
     if (event.key === 'Enter' && input.value) {
       matchAnswers(input.value);
+    }
+
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      inputHistoryIndex = Math.max(inputHistoryIndex - 1, 0);
+
+      if (inputHistory[inputHistoryIndex]) {
+        input.value = inputHistory[inputHistoryIndex];
+      }
+    }
+
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      inputHistoryIndex = Math.min(inputHistoryIndex + 1, inputHistory.length);
+
+      if (inputHistory[inputHistoryIndex]) {
+        input.value = inputHistory[inputHistoryIndex];
+      } else {
+        input.value = '';
+      }
     }
   };
 
